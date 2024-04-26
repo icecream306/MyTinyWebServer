@@ -131,7 +131,7 @@ void WebServer::eventListen()
     assert(ret >= 0);
     ret = listen(m_listenfd, 5);
     assert(ret >= 0);
-
+    // 设置定时器超时时间
     utils.init(TIMESLOT);
 
     //epoll创建内核事件表

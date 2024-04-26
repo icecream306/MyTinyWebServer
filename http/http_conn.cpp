@@ -80,7 +80,7 @@ void removefd(int epollfd, int fd)
     close(fd);
 }
 
-//将事件重置为EPOLLONESHOT
+//将事件重置为EPOLLONESHOT，解决多个线程处理一个socket的问题
 void modfd(int epollfd, int fd, int ev, int TRIGMode)
 {
     epoll_event event;
@@ -241,6 +241,7 @@ bool http_conn::read_once()
 //解析http请求行，获得请求方法，目标url及http版本号
 http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
 {
+    // 找到第一个空字符
     m_url = strpbrk(text, " \t");
     if (!m_url)
     {
